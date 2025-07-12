@@ -1,16 +1,17 @@
 package com.shipment_tracking_app
 
-class NoteAddedUpdateStrategy: ShipmentUpdateStrategy {
+class LocationUpdateStrategy: ShipmentUpdateStrategy {
     override fun updateToString(update: ShippingUpdate): String {
-        return "A note was added by the shipper to the shipment"
+        return "The shipment has arrived at a new location ${update.otherInfo}"
     }
+
     override fun updateShipment(update: ShippingUpdate, shipmentId: String) {
         val shipment = getShipment(shipmentId)
         if (update.otherInfo !is String) {
-            throw IllegalArgumentException("Missing note for $update")
+            throw IllegalArgumentException("Missing location for $update")
         }
         shipment.status = update.status
-        shipment.addNote(update.otherInfo)
+        shipment.currentLocation = update.otherInfo
         shipment.addUpdate(update)
     }
 }
