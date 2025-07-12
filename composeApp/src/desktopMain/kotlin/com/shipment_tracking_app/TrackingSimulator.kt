@@ -5,7 +5,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.io.File
 
-class TrackingSimulator {
+object TrackingSimulator {
     private val shipments = mutableListOf<Shipment>()
 
     fun addShipment(shipment: Shipment) {
