@@ -1,6 +1,6 @@
 package com.shipment_tracking_app
 
-class LocationUpdateStrategy: ShipmentUpdateStrategy {
+interface LocationUpdateStrategy: ShipmentUpdateStrategy {
     override fun updateToString(update: ShippingUpdate): String {
         return "The shipment has arrived at a new location ${update.otherInfo}"
     }
