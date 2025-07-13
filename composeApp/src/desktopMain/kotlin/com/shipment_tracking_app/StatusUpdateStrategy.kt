@@ -1,9 +1,10 @@
 package com.shipment_tracking_app
 
-abstract class StatusUpdateStrategy: ShipmentUpdateStrategy {
+open class StatusUpdateStrategy: ShipmentUpdateStrategy {
     override fun updateShipment(update: ShippingUpdate, shipmentId: String) {
         val shipment = getShipment(shipmentId)
         shipment.status = update.status
+        shipment.addUpdate(update)
     }
 
     override fun updateToString(update: ShippingUpdate): String {

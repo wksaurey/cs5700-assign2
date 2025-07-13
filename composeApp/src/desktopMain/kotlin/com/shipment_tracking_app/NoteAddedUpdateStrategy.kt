@@ -1,6 +1,6 @@
 package com.shipment_tracking_app
 
-interface NoteAddedUpdateStrategy: ShipmentUpdateStrategy {
+class NoteAddedUpdateStrategy: ShipmentUpdateStrategy {
     override fun updateToString(update: ShippingUpdate): String {
         return "A note was added by the shipper to the shipment"
     }

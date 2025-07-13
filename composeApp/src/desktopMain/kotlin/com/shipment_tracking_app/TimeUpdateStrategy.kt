@@ -1,6 +1,6 @@
 package com.shipment_tracking_app
 
-interface TimeUpdateStrategy: ShipmentUpdateStrategy {
+class TimeUpdateStrategy: ShipmentUpdateStrategy {
     override fun updateShipment(update: ShippingUpdate, shipmentId: String) {
         val shipment = getShipment(shipmentId)
         if (update.otherInfo == null) {

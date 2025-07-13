@@ -2,11 +2,9 @@ package com.shipment_tracking_app
 
 class Shipment(
     id: String,
-    status: String,
-    shippingUpdate: ShippingUpdate
     ): Subject {
     var id = id
-    var status = status
+    var status = ""
     var notes = mutableListOf<String>()
         private set
     var updateHistory = mutableListOf<ShippingUpdate>()
@@ -33,8 +31,6 @@ class Shipment(
     }
 
     override fun notifyTrackers() {
-        for (tracker in trackers) {
-
-        }
+        println(updateHistory.last().toString())
     }
 }
