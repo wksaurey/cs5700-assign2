@@ -4,7 +4,7 @@ class Shipment(
     id: String,
     status: String,
     shippingUpdate: ShippingUpdate
-    ) {
+    ): Subject {
     var id = id
     var status = status
     var notes = mutableListOf<String>()
@@ -13,7 +13,7 @@ class Shipment(
         private set
     var expectedDeliveryDate: String? = null
     var currentLocation: String? = null
-    var trackers = mutableListOf<TrackerViewHelper>()
+    private var trackers = mutableListOf<Observer>()
 
     fun addNote(note: String) {
         notes.add(note)
@@ -21,5 +21,20 @@ class Shipment(
 
     fun addUpdate(update: ShippingUpdate) {
         updateHistory.add(update)
+        notifyTrackers()
+    }
+
+    override fun registerTracker(tracker: Observer) {
+        trackers.add(tracker)
+    }
+
+    override fun removeTracker(tracker: Observer) {
+        trackers.remove(tracker)
+    }
+
+    override fun notifyTrackers() {
+        for (tracker in trackers) {
+
+        }
     }
 }
