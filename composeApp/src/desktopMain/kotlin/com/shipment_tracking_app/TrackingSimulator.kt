@@ -17,20 +17,19 @@ object TrackingSimulator {
         return shipments.find { it.id == id }
     }
 
-    fun runSimulation() = runBlocking {
-        launch {
-            val testFilePath: String = "C:/Users/Kolter.Saurey/kolter/usu/cs5700/assignments/ShipmentTrackingSimulator/composeApp/src/desktopMain/kotlin/com/shipment_tracking_app/test.txt"
-            val lines: List<String> = File(testFilePath).readLines()
-            lines.forEach { line ->
-                val data = line.split(",")
-                val status: String = data[0]
-                val shipmentId: String = data[1]
-                val timestamp: String = data[2]
-                val otherInfo: String? = data.getOrNull(3)
-                val updateStrategy: ShipmentUpdateStrategy = getUpdateStrategy(status)
-                ShippingUpdate(status, shipmentId, timestamp, otherInfo, updateStrategy).updateShipment()
-                delay(1000L)
-            }
+    suspend fun runSimulation() {
+        delay(5000L)
+        val testFilePath: String = "C:/Users/Kolter.Saurey/kolter/usu/cs5700/assignments/ShipmentTrackingSimulator/composeApp/src/desktopMain/kotlin/com/shipment_tracking_app/test.txt"
+        val lines: List<String> = File(testFilePath).readLines()
+        lines.forEach { line ->
+            delay(1000L)
+            val data = line.split(",")
+            val status: String = data[0]
+            val shipmentId: String = data[1]
+            val timestamp: String = data[2]
+            val otherInfo: String? = data.getOrNull(3)
+            val updateStrategy: ShipmentUpdateStrategy = getUpdateStrategy(status)
+            ShippingUpdate(status, shipmentId, timestamp, otherInfo, updateStrategy).updateShipment()
         }
     }
 
