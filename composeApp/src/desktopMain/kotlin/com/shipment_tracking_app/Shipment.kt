@@ -5,6 +5,10 @@ class Shipment(
     ): Subject {
     var id = id
     var status = ""
+        set(value) {
+            field = value
+            println("Setting shipment $id to $value")
+        }
     var notes = mutableListOf<String>()
         private set
     var updateHistory = mutableListOf<ShippingUpdate>()
@@ -31,6 +35,9 @@ class Shipment(
     }
 
     override fun notifyTrackers() {
-        println(updateHistory.last().toString())
+        println("Updating ${trackers.size} trackers")
+        for (tracker in trackers) {
+            tracker.newUpdate()
+        }
     }
 }

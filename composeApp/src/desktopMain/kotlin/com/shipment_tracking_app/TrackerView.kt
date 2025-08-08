@@ -19,10 +19,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import java.text.SimpleDateFormat
 
 
 @Composable
 fun TrackerView(shipmentViews: List<TrackerViewHelper>, onRemoveShipmentView: (String) -> Unit) {
+    val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
     LazyColumn (
         modifier = Modifier
             .fillMaxWidth()
@@ -47,15 +49,22 @@ fun TrackerView(shipmentViews: List<TrackerViewHelper>, onRemoveShipmentView: (S
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ){
-                        Text("Tracking Shipment ${it.shipmentId}", fontSize = 20.sp)
+                        Text("Tracking Shipment ${it.shipmentId.value}", fontSize = 20.sp)
                         IconButton(onClick = {
-                            onRemoveShipmentView(it.shipmentId)
+                            onRemoveShipmentView(it.shipmentId.toString())
                             println("Removing TrackerViewHelper ${it.shipmentId}")
                         }) {
                             Text("✕", fontWeight = FontWeight.Bold)
                         }
                     }
-                    Text("Status: ${it.shipmentStatus}")
+                    Text("Status: ${it.shipmentStatus.value}")
+                    Text("Location: ${it.shipmentLocation.value ?: "Unknown"}")
+                    val date = it.expectedDeliveryDate.value
+                    if (date == null) {
+                        Text("Expected Delivery: --")
+                    } else {
+                        Text("Expected Delivery: ${simpleDateFormat.format(date.toLong())}")
+                    }
                 }
             }
         }

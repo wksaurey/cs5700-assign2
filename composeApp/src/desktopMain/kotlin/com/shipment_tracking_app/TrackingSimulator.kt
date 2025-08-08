@@ -30,7 +30,9 @@ object TrackingSimulator {
             val otherInfo: String? = data.getOrNull(3)
             val updateStrategy: ShipmentUpdateStrategy = getUpdateStrategy(status)
             ShippingUpdate(status, shipmentId, timestamp, otherInfo, updateStrategy).updateShipment()
+            println("Shipment $shipmentId updated to $status")
         }
+        println("Simulation completed")
     }
 
     private fun getUpdateStrategy(status: String): ShipmentUpdateStrategy {

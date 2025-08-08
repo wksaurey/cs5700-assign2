@@ -59,11 +59,15 @@ fun App() {
                 Button(
                     onClick = {
                         println("Entered shipment $shipmentId")
-                        if (shipmentViews.find { it.shipmentId == shipmentId } == null) {
-                            val trackerView = TrackerViewHelper(shipmentId)
+                        if (shipmentViews.find { it.shipmentId.value == shipmentId } != null) {
+                            println("Already tracking shipment $shipmentId")
+                        } else if (TrackingSimulator.findShipment(shipmentId) == null) {
+                            println("Shipment $shipmentId not found")
+                        } else {
+                            val trackerView = TrackerViewHelper(mutableStateOf<String>(shipmentId))
                             trackerView.startTracking()
                             shipmentViews += trackerView
-                        } else { println("Already tracking shipment $shipmentId") }
+                        }
                         shipmentId = ""
                     },
                     modifier = Modifier.height(textFieldHeight),
@@ -73,7 +77,7 @@ fun App() {
                 }
             }
             TrackerView(shipmentViews, onRemoveShipmentView = {shipmentId: String ->
-                shipmentViews.removeAll { it.shipmentId == shipmentId }
+                shipmentViews.removeAll { it.shipmentId.toString() == shipmentId }
             })
         }
     }
